@@ -6,17 +6,17 @@ A full-stack task management application built with **Node.js + TypeScript** bac
 
 ## Tech Stack
 
-| Layer | Technology |
-|-------|-----------|
-| Backend | Node.js, Express, TypeScript |
-| ORM | Prisma |
-| Database | MySQL |
-| Auth | JWT (Access + Refresh Tokens), bcrypt |
-| Frontend | Next.js 14 (App Router), TypeScript |
-| Styling | Tailwind CSS |
-| State | Zustand |
-| Forms | React Hook Form |
-| HTTP Client | Axios (with auto token refresh) |
+| Layer       | Technology                            |
+| ----------- | ------------------------------------- |
+| Backend     | Node.js, Express, TypeScript          |
+| ORM         | Prisma                                |
+| Database    | MySQL                                 |
+| Auth        | JWT (Access + Refresh Tokens), bcrypt |
+| Frontend    | Next.js 14 (App Router), TypeScript   |
+| Styling     | Tailwind CSS                          |
+| State       | Zustand                               |
+| Forms       | React Hook Form                       |
+| HTTP Client | Axios (with auto token refresh)       |
 
 ---
 
@@ -87,6 +87,7 @@ task-management/
 ### Prerequisites
 
 Make sure you have installed:
+
 - **Node.js** v18 or higher
 - **MySQL** running locally (or a remote MySQL instance)
 - **npm** or **yarn**
@@ -136,6 +137,7 @@ FRONTEND_URL=http://localhost:3000
 ```
 
 > **Tip:** You can generate strong secrets with:
+>
 > ```bash
 > node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"
 > ```
@@ -189,22 +191,28 @@ NEXT_PUBLIC_API_URL=http://localhost:5000
 Open **two terminal windows**:
 
 **Terminal 1 — Backend:**
+
 ```bash
 cd task-management/backend
 npm run dev
 ```
+
 You should see:
+
 ```
 ✅ Database connected successfully
 🚀 Server running on http://localhost:5000
 ```
 
 **Terminal 2 — Frontend:**
+
 ```bash
 cd task-management/frontend
 npm run dev
 ```
+
 You should see:
+
 ```
 ▲ Next.js 14.x.x
 - Local: http://localhost:3000
@@ -226,14 +234,15 @@ Visit **http://localhost:3000** in your browser.
 
 ### Authentication
 
-| Method | Endpoint | Auth Required | Description |
-|--------|----------|:---:|-------------|
-| POST | `/auth/register` | ❌ | Register a new user |
-| POST | `/auth/login` | ❌ | Login and get tokens |
-| POST | `/auth/refresh` | ❌ | Get new access token |
-| POST | `/auth/logout` | ❌ | Invalidate refresh token |
+| Method | Endpoint         | Auth Required | Description              |
+| ------ | ---------------- | :-----------: | ------------------------ |
+| POST   | `/auth/register` |      ❌       | Register a new user      |
+| POST   | `/auth/login`    |      ❌       | Login and get tokens     |
+| POST   | `/auth/refresh`  |      ❌       | Get new access token     |
+| POST   | `/auth/logout`   |      ❌       | Invalidate refresh token |
 
 **Register / Login request body:**
+
 ```json
 {
   "name": "John Doe",
@@ -243,6 +252,7 @@ Visit **http://localhost:3000** in your browser.
 ```
 
 **Token response:**
+
 ```json
 {
   "message": "Login successful",
@@ -258,26 +268,27 @@ Visit **http://localhost:3000** in your browser.
 
 All task endpoints require the `Authorization: Bearer <accessToken>` header.
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/tasks` | List tasks (paginated, filterable) |
-| POST | `/tasks` | Create a new task |
-| GET | `/tasks/:id` | Get a single task |
-| PATCH | `/tasks/:id` | Update a task |
-| DELETE | `/tasks/:id` | Delete a task |
-| POST | `/tasks/:id/toggle` | Toggle task completion |
+| Method | Endpoint            | Description                        |
+| ------ | ------------------- | ---------------------------------- |
+| GET    | `/tasks`            | List tasks (paginated, filterable) |
+| POST   | `/tasks`            | Create a new task                  |
+| GET    | `/tasks/:id`        | Get a single task                  |
+| PATCH  | `/tasks/:id`        | Update a task                      |
+| DELETE | `/tasks/:id`        | Delete a task                      |
+| POST   | `/tasks/:id/toggle` | Toggle task completion             |
 
 **GET /tasks query parameters:**
 
-| Param | Type | Example | Description |
-|-------|------|---------|-------------|
-| `page` | number | `?page=2` | Page number (default: 1) |
-| `limit` | number | `?limit=10` | Items per page (default: 10, max: 50) |
-| `status` | string | `?status=PENDING` | Filter by status |
-| `priority` | string | `?priority=HIGH` | Filter by priority |
-| `search` | string | `?search=meeting` | Search by title |
+| Param      | Type   | Example           | Description                           |
+| ---------- | ------ | ----------------- | ------------------------------------- |
+| `page`     | number | `?page=2`         | Page number (default: 1)              |
+| `limit`    | number | `?limit=10`       | Items per page (default: 10, max: 50) |
+| `status`   | string | `?status=PENDING` | Filter by status                      |
+| `priority` | string | `?priority=HIGH`  | Filter by priority                    |
+| `search`   | string | `?search=meeting` | Search by title                       |
 
 **Create / Update task body:**
+
 ```json
 {
   "title": "Finish the report",
@@ -289,6 +300,7 @@ All task endpoints require the `Authorization: Bearer <accessToken>` header.
 ```
 
 **Valid values:**
+
 - `status`: `PENDING` | `IN_PROGRESS` | `COMPLETED`
 - `priority`: `LOW` | `MEDIUM` | `HIGH`
 
@@ -297,6 +309,7 @@ All task endpoints require the `Authorization: Bearer <accessToken>` header.
 ## Features
 
 ### Backend
+
 - ✅ JWT authentication with Access + Refresh token rotation
 - ✅ Password hashing with bcrypt (12 salt rounds)
 - ✅ Protected routes via middleware
@@ -306,6 +319,7 @@ All task endpoints require the `Authorization: Bearer <accessToken>` header.
 - ✅ Prisma ORM with MySQL
 
 ### Frontend
+
 - ✅ Login and Registration pages with form validation
 - ✅ Automatic token refresh on 401 (via Axios interceptor)
 - ✅ Dashboard with task stats overview
@@ -317,44 +331,3 @@ All task endpoints require the `Authorization: Bearer <accessToken>` header.
 - ✅ Zustand global auth state
 
 ---
-
-## Build for Production
-
-### Backend
-```bash
-cd backend
-npm run build
-npm start
-```
-
-### Frontend
-```bash
-cd frontend
-npm run build
-npm start
-```
-
----
-
-## Common Issues
-
-**"Can't connect to database"**
-- Make sure MySQL is running: `sudo systemctl start mysql`
-- Verify your `DATABASE_URL` credentials in `.env`
-- Ensure the database exists: `CREATE DATABASE task_management_db;`
-
-**"Prisma Client not generated"**
-```bash
-cd backend && npx prisma generate
-```
-
-**CORS errors in the browser**
-- Make sure `FRONTEND_URL` in backend `.env` matches exactly where your frontend runs (e.g., `http://localhost:3000`)
-
-**Port already in use**
-```bash
-# Kill process on port 5000
-lsof -ti:5000 | xargs kill
-# Kill process on port 3000
-lsof -ti:3000 | xargs kill
-```
